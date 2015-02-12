@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project name="pdb" default="run" basedir=".">
+
+  <description>PDB project - spatial, multimedia and temporal databases</description>
+
+  <property name="src" location="src"/>
+  <property name="doc" location="doc"/>
+  <property name="out.production" location="out/production"/>
+  <property name="out.jar" location="out/jar"/>
+  <property name="out.jar.name" value="${out.jar}/art.jar"/>
+  <property name="lib" value="lib"/>
+  <property name="libs" value="lib/oraclelib/ojdbc7.jar lib/oraclelib/ordim.jar lib/oraclelib/sdoapi.jar"/>
+
+  <!-- get libraries -->
+  <path id="lib.path.ref">
+    <fileset dir="lib/oraclelib" includes="*.jar"/>
+  </path>
+
+  <presetdef name="javac">
+    <javac includeantruntime="false" />
+  </presetdef>
+
+  <!-- clean out directory -->
+  <target name="clean" description="Clean out directory">
+    <delete dir="${doc}"/>
+    <delete dir="${out.production}"/>
+    <delete dir="${out.jar}"/>
+  </target>
+
+  <!-- compile source codes -->
+  <target name="compile" depends="clean" description="Compile source code">
+    <mkdir  dir="${out.production}"/>
+    <javac  srcdir="${src}"
+            destdir="${out.production}"
+            encoding="UTF-8"
+            classpathref="lib.path.ref">
+    </javac>
+  </target>
+
+  <!-- create jar archive -->
+  <target name="jar" depends="compile" description="Create runnable jar archive">
+    <mkdir dir="${out.jar}"/>
+    <jar jarfile="${out.jar.name}" basedir="${out.production}">
+      <manifest>
+        <attribute name="Main-Class" value="client.Main"/>
+        <attribute name="Class-Path" value="${libs}"/>
+      </manifest>
+    </jar>
+
+    <!-- copy necessary files to dest/lib -->
+    <mkdir dir="${out.jar}/lib"/>
+    <copy todir="${out.jar}/lib">
+      <fileset dir="${lib}" excludes="**/*.java"/>
+    </copy>
+  </target>
+
+  <!-- run application -->
+  <target name="run" depends="jar" description="Run application from jar archive">
+    <java jar="${out.jar.name}/" dir="${out.jar}" fork="true"/>
+  </target>
+
+  <!-- create javadoc -->
+  <target name="javadoc">
+    <javadoc
+            sourcepath="${src}"
+            defaultexcludes="yes"
+            destdir="${doc}"
+            author="true"
+            version="true"
+            use="true"
+            encoding="utf-8"
+            windowtitle="PDB 2014: Spatial, multimedia and temporal databases"
+            classpathref="lib.path.ref">
+      <doctitle><![CDATA[<h1>PDB 2014: Spatial, multimedia and temporal databases</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Authors: xvesel60@stud.fit.vutbr.cz, xkubov02@stud.fit.vutbr.cz, xkolac11@stud.fit.vutbr.cz</i>]]></bottom>
+    </javadoc>
+  </target>
+
+</project>
+

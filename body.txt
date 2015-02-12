@@ -1,0 +1,7 @@
+xvesel60  100%
+xkubov02  100%
+xkolac11  100%
+Veducim projektu je Martin Veselovsky (xvesel60), pracoval na komunikacii
+s databazou a s multimediami. Tomas Kubovcik (xkubov02) pracoval s GUI 
+a vykreslovanim geometrie. Petr Kolacek (xkolac11) pracoval na komunikacii 
+s databazou a vizualizacii priestorovych dat.
